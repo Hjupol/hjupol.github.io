@@ -1,10 +1,16 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portfolio de Adriel Arandez, desarrollador de videojuegos y programador. Proyectos en Unity, C# y experiencias interactivas.">
+    <meta name="author" content="Adriel Arandez">
+    <meta property="og:title" content="Adriel Arandez Portfolio">
+    <meta property="og:description" content="Portfolio de videojuegos, prototipos y experiencias interactivas desarrolladas por Adriel Arandez.">
+    <meta property="og:type" content="website">
+    <meta property="og:image" content="./imagenes/cool_lima.png">
     <title>Adriel Arandez Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./assets/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
     <style>
         /* Custom animations and styles */
@@ -107,6 +113,16 @@
                 width: 100%;
             }
 
+        .mobile-menu {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.25s ease;
+        }
+
+        .mobile-menu.is-open {
+            max-height: 260px;
+        }
+
         .animate-fade-in {
             animation: fadeIn 1s ease-out forwards;
         }
@@ -129,19 +145,27 @@
     <nav class="fixed w-full bg-black bg-opacity-80 z-50 backdrop-filter backdrop-blur-lg">
         <div class="container mx-auto px-6 py-4 flex justify-between items-center">
             <a href="#home" class="text-2xl font-bold pixel-font text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-500">
-                Adriel Arández
+                Adriel Ar&aacute;ndez
             </a>
             <div class="hidden md:flex space-x-8">
-                <a href="#home" class="nav-link text-white hover:text-purple-300">Home</a>
-                <a href="#projects" class="nav-link text-white hover:text-purple-300">Projects</a>
-                <a href="#skills" class="nav-link text-white hover:text-purple-300">Skills</a>
-                <a href="#contact" class="nav-link text-white hover:text-purple-300">Contact</a>
+                <a href="#home" class="nav-link text-white hover:text-purple-300">Inicio</a>
+                <a href="#projects" class="nav-link text-white hover:text-purple-300">Proyectos</a>
+                <a href="#play" class="nav-link text-white hover:text-purple-300">Jugar</a>
+                <a href="#contact" class="nav-link text-white hover:text-purple-300">Contacto</a>
             </div>
-            <button class="md:hidden text-white">
+            <button class="md:hidden text-white" type="button" aria-label="Abrir men&uacute;" aria-expanded="false" aria-controls="mobile-menu">
                 <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />
                 </svg>
             </button>
+        </div>
+        <div id="mobile-menu" class="mobile-menu md:hidden bg-black bg-opacity-90 border-t border-gray-800">
+            <div class="container mx-auto px-6 py-4 flex flex-col gap-4">
+                <a href="#home" class="text-white hover:text-purple-300">Inicio</a>
+                <a href="#projects" class="text-white hover:text-purple-300">Proyectos</a>
+                <a href="#play" class="text-white hover:text-purple-300">Jugar</a>
+                <a href="#contact" class="text-white hover:text-purple-300">Contacto</a>
+            </div>
         </div>
     </nav>
 
@@ -151,8 +175,8 @@
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         <div class="container mx-auto relative z-10 animate-fade-in">
             <div class="max-w-2xl mx-auto">
-                <img src=".\imagenes\cool_lima.png" alt="Imagen"
-                     class="img-logo s-full border-4 border-black w-40 h-40 object-cover mb-6 shadow-lg mx-auto">
+                <img src="./imagenes/cool_lima.png" alt="Retrato ilustrado de Adriel"
+                     class="img-logo rounded-full border-4 border-black w-40 h-40 object-cover mb-6 shadow-lg mx-auto">
                 <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white">
                     Hola, soy <span class="text-red-500">Adriel</span>
                 </h1>
@@ -160,12 +184,11 @@
                     Game Developer & Programador
                 </h2>
                 <p class="text-lg md:text-xl text-gray-300 mb-8 leading-relaxed">
-                    Les doy la bienvenida a mi página, donde, mientras aprendo como, actualizaré mi portfolio.
-                    Adicionalmente podrán encontrar mis datos de contacto.
+                    Bienvenido a mi portfolio. Ac&aacute; re&uacute;no mis proyectos, prototipos y datos de contacto.
                 </p>
                 <div class="flex justify-center space-x-4">
                     <a href="#projects" class="px-6 py-3 bg-gradient-to-r from-red-600 to-purple-600 rounded-full text-white font-semibold hover:shadow-lg hover:opacity-90 transition-all">
-                        Mis trabajos
+                        Ver proyectos
                     </a>
                     <a href="#contact" class="px-6 py-3 border-2 border-red-400 rounded-full text-red-400 font-semibold hover:bg-red-400 hover:bg-opacity-10 transition-all">
                         Contacto
@@ -188,7 +211,7 @@
                     <span class="pixel-font text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-600">Proyectos</span>
                 </h2>
                 <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-                    Acá algunos de mis desarrollos.
+                    Algunos de mis desarrollos.
                 </p>
             </div>
 
@@ -196,7 +219,7 @@
                 <!-- Project 1 -->
                 <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.1s;">
                     <div class="project-image relative overflow-hidden">
-                        <img src=".\imagenes\croc.png" alt="Sci-fi first person shooter game screenshot showing advanced weaponry and futuristic city environment at night with neon lights"
+                        <img src="./imagenes/croc.png" alt="Captura del juego Croc Rouge"
                              class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
                         <div class="absolute inset-0 flex items-end p-4">
@@ -204,15 +227,15 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <p class="text-gray-400 mb-4">This is my first prototype game. Is an arcade spaceship-shooter game made entirely by myself.</p>
+                        <p class="text-gray-400 mb-4">Mi primer prototipo: un arcade de naves desarrollado &iacute;ntegramente por m&iacute;.</p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
                             <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
                             <span class="px-3 py-1 bg-gray-800 text-yellow-300 text-xs rounded-full">Arcade</span>
                         </div>
                         <div class="mt-4 flex justify-between">
-                            <a href="https://aarandez.itch.io/croc-rouge" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">View Details</a>
-                            <a href="https://aarandez.itch.io/croc-rouge/purchase" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Play Demo</a>
+                            <a href="https://aarandez.itch.io/croc-rouge" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
+                            <a href="https://aarandez.itch.io/croc-rouge/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
                         </div>
                     </div>
                 </div>
@@ -220,7 +243,7 @@
                 <!-- Project 2 -->
                 <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.2s;">
                     <div class="project-image relative overflow-hidden">
-                        <img src=".\imagenes\color.png" alt="Isometric view of a puzzle platformer game with colorful blocks and gravity-defying mechanics in a surreal landscape"
+                        <img src="./imagenes/color.png" alt="Captura del juego Color Dimensions"
                              class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
                         <div class="absolute inset-0 flex items-end p-4">
@@ -228,15 +251,15 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <p class="text-gray-400 mb-4">A top-down shooter simple prototype.</p>
+                        <p class="text-gray-400 mb-4">Un prototipo simple de shooter con vista cenital.</p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
                             <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
                             <span class="px-3 py-1 bg-gray-800 text-yellow-300 text-xs rounded-full">Top Down</span>
                         </div>
                         <div class="mt-4 flex justify-between">
-                            <a href="https://aarandez.itch.io/color-dimensions" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">View Details</a>
-                            <a href="https://aarandez.itch.io/color-dimensions/purchase" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Play Demo</a>
+                            <a href="https://aarandez.itch.io/color-dimensions" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
+                            <a href="https://aarandez.itch.io/color-dimensions/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
                         </div>
                     </div>
                 </div>
@@ -244,23 +267,23 @@
                 <!-- Project 3 -->
                 <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.3s;">
                     <div class="project-image relative overflow-hidden">
-                        <img src=".\imagenes\dont.png" alt="Top-down 2D RPG game showing pixel art characters in a forest with dynamic lighting and weather effects"
+                        <img src="./imagenes/dont.png" alt="Captura del juego Don't Fall"
                              class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
                         <div class="absolute inset-0 flex items-end p-4">
-                            <h3 class="text-xl font-bold text-white">Dont Fall</h3>
+                            <h3 class="text-xl font-bold text-white">Don't Fall</h3>
                         </div>
                     </div>
                     <div class="p-6">
-                        <p class="text-gray-400 mb-4">Don´t Fall is a party-type video game based on one of the Crash Bash video game mechanics in which you have to throw the other players off the platform.</p>
+                        <p class="text-gray-400 mb-4">Don't Fall es un juego de estilo party basado en una mec&aacute;nica de Crash Bash: sacar a los dem&aacute;s jugadores de la plataforma.</p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
                             <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
                             <span class="px-3 py-1 bg-gray-800 text-yellow-300 text-xs rounded-full">Party Game</span>
                         </div>
                         <div class="mt-4 flex justify-between">
-                            <a href="https://aarandez.itch.io/dont-fall" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">View Details</a>
-                            <a href="https://aarandez.itch.io/dont-fall/purchase" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Play Demo</a>
+                            <a href="https://aarandez.itch.io/dont-fall" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
+                            <a href="https://aarandez.itch.io/dont-fall/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
                         </div>
                     </div>
                 </div>
@@ -268,7 +291,7 @@
                 <!-- Project 4 -->
                 <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.1s;">
                     <div class="project-image relative overflow-hidden">
-                        <img src=".\imagenes\la1ra.png" alt="Sci-fi first person shooter game screenshot showing advanced weaponry and futuristic city environment at night with neon lights"
+                        <img src="./imagenes/la1ra.png" alt="Captura del juego LaPrimeraVez"
                              class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
                         <div class="absolute inset-0 flex items-end p-4">
@@ -276,15 +299,15 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <p class="text-gray-400 mb-4">A minimalist experience representing the concept of finding the “first love”.</p>
+                        <p class="text-gray-400 mb-4">Una experiencia minimalista que representa el concepto de encontrar el primer amor.</p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
                             <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
                             <span class="px-3 py-1 bg-gray-800 text-green-300 text-xs rounded-full">Minimalist</span>
                         </div>
                         <div class="mt-4 flex justify-between">
-                            <a href="https://aarandez.itch.io/laprimeravez" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">View Details</a>
-                            <a href="https://aarandez.itch.io/laprimeravez/purchase" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Play Demo</a>
+                            <a href="https://aarandez.itch.io/laprimeravez" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
+                            <a href="https://aarandez.itch.io/laprimeravez/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
                         </div>
                     </div>
                 </div>
@@ -292,7 +315,7 @@
                 <!-- Project 5 -->
                 <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.1s;">
                     <div class="project-image relative overflow-hidden">
-                        <img src=".\imagenes\pon.png" alt="Sci-fi first person shooter game screenshot showing advanced weaponry and futuristic city environment at night with neon lights"
+                        <img src="./imagenes/pon.png" alt="Captura del juego PON"
                              class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
                         <div class="absolute inset-0 flex items-end p-4">
@@ -300,15 +323,15 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <p class="text-gray-400 mb-4">PON is a plataformer mobile game.</p>
+                        <p class="text-gray-400 mb-4">PON es un juego de plataformas para dispositivos m&oacute;viles.</p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
                             <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
                             <span class="px-3 py-1 bg-gray-800 text-green-300 text-xs rounded-full">Mobile</span>
                         </div>
                         <div class="mt-4 flex justify-between">
-                            <a href="https://aarandez.itch.io/pon" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">View Details</a>
-                            <a href="https://aarandez.itch.io/pon/purchase" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Play Demo</a>
+                            <a href="https://aarandez.itch.io/pon" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
+                            <a href="https://aarandez.itch.io/pon/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
                         </div>
                     </div>
                 </div>
@@ -316,7 +339,7 @@
                 <!-- Project 6 -->
                 <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.1s;">
                     <div class="project-image relative overflow-hidden">
-                        <img src=".\imagenes\repel.png" alt="Sci-fi first person shooter game screenshot showing advanced weaponry and futuristic city environment at night with neon lights"
+                        <img src="./imagenes/repel.png" alt="Captura del proyecto Repel, Dunk n' Build"
                              class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
                         <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
                         <div class="absolute inset-0 flex items-end p-4">
@@ -324,7 +347,7 @@
                         </div>
                     </div>
                     <div class="p-6">
-                        <p class="text-gray-400 mb-4">3 XR mechanics to have fun with an Oculus and a Leap Motion controller.</p>
+                        <p class="text-gray-400 mb-4">Tres mec&aacute;nicas XR para jugar con Oculus y un controlador Leap Motion.</p>
                         <div class="flex flex-wrap gap-2">
                             <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
                             <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
@@ -333,8 +356,8 @@
                             <span class="px-3 py-1 bg-gray-800 text-pink-300 text-xs rounded-full">Leap</span>
                         </div>
                         <div class="mt-4 flex justify-between">
-                            <a href="https://live-games.itch.io/repel-dunk-n-build" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">View Details</a>
-                            <a href="https://live-games.itch.io/repel-dunk-n-build/purchase" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Play Demo</a>
+                            <a href="https://live-games.itch.io/repel-dunk-n-build" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
+                            <a href="https://live-games.itch.io/repel-dunk-n-build/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
                         </div>
                     </div>
                 </div>
@@ -342,147 +365,40 @@
         </div>
     </section>
 
-    <!-- Skills Section 
-    <section id="skills" class="py-20 bg-gray-800">
+    <!-- Play Section -->
+    <section id="play" class="py-20 bg-gray-800">
         <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
+            <div class="text-center mb-10">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
-                    <span class="pixel-font text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-600">Habilidades</span>
+                    <span class="pixel-font text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-600">Jugar</span>
                 </h2>
                 <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-                    Habilidades? esta parte va a ser borrada.
+                    Prob&aacute; TopDownTwemplate directamente desde el navegador.
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-12 max-w-4xl mx-auto">
-                <div class="animate-fade-in" style="animation-delay: 0.2s;">
-                    <div class="mb-6">
-                        <h3 class="text-xl font-semibold text-white mb-4">Game Engines</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-300">Unity</span>
-                                    <span class="text-cyan-400">90%</span>
-                                </div>
-                                <div class="skill-bar rounded-full overflow-hidden">
-                                    <div class="skill-progress" style="--skill-level: 90%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-300">Unreal Engine</span>
-                                    <span class="text-cyan-400">80%</span>
-                                </div>
-                                <div class="skill-bar rounded-full overflow-hidden">
-                                    <div class="skill-progress" style="--skill-level: 80%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-300">Godot</span>
-                                    <span class="text-cyan-400">70%</span>
-                                </div>
-                                <div class="skill-bar rounded-full overflow-hidden">
-                                    <div class="skill-progress" style="--skill-level: 70%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-xl font-semibold text-white mb-4">Programming</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-300">C#</span>
-                                    <span class="text-cyan-400">95%</span>
-                                </div>
-                                <div class="skill-bar rounded-full overflow-hidden">
-                                    <div class="skill-progress" style="--skill-level: 95%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-300">C++</span>
-                                    <span class="text-cyan-400">85%</span>
-                                </div>
-                                <div class="skill-bar rounded-full overflow-hidden">
-                                    <div class="skill-progress" style="--skill-level: 85%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-300">Python</span>
-                                    <span class="text-cyan-400">75%</span>
-                                </div>
-                                <div class="skill-bar rounded-full overflow-hidden">
-                                    <div class="skill-progress" style="--skill-level: 75%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="animate-fade-in" style="animation-delay: 0.4s;">
-                    <div class="mb-6">
-                        <h3 class="text-xl font-semibold text-white mb-4">Design & Art</h3>
-                        <div class="space-y-4">
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-300">3D Modeling</span>
-                                    <span class="text-cyan-400">80%</span>
-                                </div>
-                                <div class="skill-bar rounded-full overflow-hidden">
-                                    <div class="skill-progress" style="--skill-level: 80%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-300">Animation</span>
-                                    <span class="text-cyan-400">75%</span>
-                                </div>
-                                <div class="skill-bar rounded-full overflow-hidden">
-                                    <div class="skill-progress" style="--skill-level: 75%"></div>
-                                </div>
-                            </div>
-                            <div>
-                                <div class="flex justify-between mb-1">
-                                    <span class="text-gray-300">Shader Programming</span>
-                                    <span class="text-cyan-400">70%</span>
-                                </div>
-                                <div class="skill-bar rounded-full overflow-hidden">
-                                    <div class="skill-progress" style="--skill-level: 70%"></div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div>
-                        <h3 class="text-xl font-semibold text-white mb-4">Other Skills</h3>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="flex items-center space-x-2">
-                                <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
-                                <span class="text-gray-300">Game Design</span>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
-                                <span class="text-gray-300">Sound Design</span>
-                            </div>
-                            <div class="flex items-center space-x-2">
-                                <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
-                                <span class="text-gray-300">UI/UX</span>
-                            </div>
-                            <div class="flex items-center space-x=2">
-                                <div class="w-2 h-2 bg-cyan-400 rounded-full"></div>
-                                <span class="text-gray-300">AI Programming</span>
-                            </div>
-                        </div>
+            <div class="max-w-5xl mx-auto overflow-hidden rounded-lg border border-gray-700 bg-black shadow-lg">
+                <div id="game-frame" class="relative w-full" style="padding-top: 77.5%;">
+                    <div class="absolute inset-0 flex flex-col items-center justify-center gap-4 p-6 text-center">
+                        <h3 class="text-2xl font-bold text-white">TopDownTwemplate</h3>
+                        <p class="max-w-md text-gray-400">
+                            El juego se carga solamente cuando lo inici&aacute;s.
+                        </p>
+                        <button
+                            id="load-game"
+                            type="button"
+                            class="px-6 py-3 bg-gradient-to-r from-red-600 to-purple-600 rounded-full text-white font-semibold hover:shadow-lg hover:opacity-90 transition-all">
+                            Cargar juego
+                        </button>
+                        <a href="https://aarandez.itch.io/topdowntwemplate" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">
+                            Abrir en itch.io
+                        </a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
-    -->
+
     <!-- Contact Section -->
     <section id="contact" class="py-20 bg-gray-900">
         <div class="container mx-auto px-6">
@@ -491,7 +407,7 @@
                     <span class="pixel-font text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-600">Contactate</span>
                 </h2>
                 <p class="text-xl text-gray-400 max-w-2xl mx-auto">
-                    Consultas? Sugerencias? Regalos...? Dejo mis datos de contacto para que puedan escribirme.
+                    Si quer&eacute;s contactarme por proyectos, consultas o propuestas, pod&eacute;s escribirme por estos medios.
                 </p>
             </div>
 
@@ -502,11 +418,11 @@
                 </div>
                 <div class="flex items-center space-x-4 w-full">
                     <span class="text-purple-400 font-bold text-lg">Itch.io:</span>
-                    <a href="https://aarandez.itch.io" target="_blank" class="text-cyan-400 hover:text-cyan-300 font-mono">aarandez.itch.io</a>
+                    <a href="https://aarandez.itch.io" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 font-mono">aarandez.itch.io</a>
                 </div>
                 <div class="flex items-center space-x-4 w-full">
                     <span class="text-blue-400 font-bold text-lg">LinkedIn:</span>
-                    <a href='https://ar.linkedin.com/in/adriel-arández-136429180' target="_blank" class="text-cyan-400 hover:text-cyan-300 font-mono">linkedin.com/in/adriel-arández-136429180</a>
+                    <a href="https://ar.linkedin.com/in/adriel-ar%C3%A1ndez-136429180" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 font-mono">linkedin.com/in/adriel-ar&aacute;ndez-136429180</a>
                 </div>
             </div>
 
@@ -548,12 +464,12 @@
             <div class="flex flex-col md:flex-row justify-between items-center">
                 <div class="mb-6 md:mb-0">
                     <a href="#home" class="text-2xl font-bold pixel-font text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-600">
-                        Adriel Arández
+                        Adriel Ar&aacute;ndez
                     </a>
                     <p class="text-gray-500 mt-2">Avanzando</p>
                 </div>
                 <div class="flex space-x-6">
-                    <a href="https://github.com/Hjupol" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                    <a href="https://github.com/Hjupol" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="text-gray-400 hover:text-cyan-400 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z" />
                         </svg>
@@ -570,7 +486,7 @@
                         </svg>
                     </a>
                     -->
-                    <a href="https://www.instagram.com/adriel.arandez" class="text-gray-400 hover:text-cyan-400 transition-colors">
+                    <a href="https://www.instagram.com/adriel.arandez" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="text-gray-400 hover:text-cyan-400 transition-colors">
                         <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="currentColor" viewBox="0 0 24 24">
                             <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z" />
                         </svg>
@@ -586,7 +502,10 @@
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
 
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                const target = document.querySelector(this.getAttribute('href'));
+                if (!target) return;
+
+                target.scrollIntoView({
                     behavior: 'smooth'
                 });
             });
@@ -613,21 +532,39 @@
         // Check on scroll
         window.addEventListener('scroll', animateOnScroll);
 
-        // Mobile menu toggle (placeholder functionality)
+        // Mobile menu toggle
         const mobileMenuButton = document.querySelector('button.md\\:hidden');
+        const mobileMenu = document.querySelector('#mobile-menu');
         mobileMenuButton.addEventListener('click', () => {
-            alert('Mobile menu would open here in a full implementation.');
+            const isOpen = mobileMenu.classList.toggle('is-open');
+            mobileMenuButton.setAttribute('aria-expanded', String(isOpen));
         });
 
-        // Form submission
-        const form = document.querySelector('form');
-        if (form) {
-            form.addEventListener('submit', (e) => {
-                e.preventDefault();
-                alert('Thank you for your message! This would be processed in a live implementation.');
-                form.reset();
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.remove('is-open');
+                mobileMenuButton.setAttribute('aria-expanded', 'false');
+            });
+        });
+
+        // Load itch.io game only after user interaction
+        const loadGameButton = document.querySelector('#load-game');
+        const gameFrame = document.querySelector('#game-frame');
+
+        if (loadGameButton && gameFrame) {
+            loadGameButton.addEventListener('click', () => {
+                const iframe = document.createElement('iframe');
+                iframe.src = 'https://itch.io/embed-upload/10250062?color=EC1C24';
+                iframe.allowFullscreen = true;
+                iframe.allow = 'fullscreen; gamepad';
+                iframe.title = 'TopDownTwemplate en itch.io';
+                iframe.className = 'absolute inset-0 h-full w-full border-0';
+
+                gameFrame.replaceChildren(iframe);
             });
         }
     </script>
 </body>
 </html>
+
+
