@@ -10,6 +10,8 @@
     <meta property="og:type" content="website">
     <meta property="og:image" content="./imagenes/cool_lima.png">
     <title>Adriel Arandez Portfolio</title>
+    <link rel="icon" type="image/png" href="./favicon.png">
+    <link rel="apple-touch-icon" href="./apple-touch-icon.png">
     <link rel="stylesheet" href="./assets/styles.css">
     <link href="https://fonts.googleapis.com/css2?family=Rubik+Mono+One&family=Kanit:wght@400;600&display=swap" rel="stylesheet">
     <style>
@@ -67,10 +69,338 @@
                 border-color: var(--secondary);
             }
 
-        .img-logo:hover {
-            transform: translateY(-10px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
-            border-color: var(--terciary);
+        .hero-card {
+            position: relative;
+            width: 10rem;
+            height: 10rem;
+            margin: 0 auto 1.5rem;
+            border-radius: 999px;
+            transform: rotate3d(0);
+            transition: transform 300ms ease-out, box-shadow 300ms ease-out;
+            box-shadow: 0 16px 35px rgba(0, 0, 0, 0.35);
+            will-change: transform;
+        }
+
+        .hero-card:hover {
+            box-shadow: 0 20px 45px rgba(230, 57, 70, 0.28), 0 0 0 1px rgba(255, 255, 255, 0.12);
+        }
+
+        .hero-card .img-logo {
+            width: 100%;
+            height: 100%;
+            margin: 0;
+            border-radius: inherit;
+            object-fit: cover;
+            display: block;
+        }
+
+        .hero-card-glow {
+            position: absolute;
+            inset: 0;
+            border-radius: inherit;
+            pointer-events: none;
+            background-image: radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.22), rgba(0, 0, 0, 0.06));
+            mix-blend-mode: screen;
+        }
+
+        .mzaCarousel {
+            --mzaC-fg: #e7ecf2;
+            --mzaC-accent: #ff3e4e;
+            --mzaC-accent2: #9d4edd;
+            --mzaC-glass: rgba(255, 255, 255, 0.06);
+            --mzaC-slideW: min(880px, 90vw);
+            --mzaPagH: 64px;
+            --mzaCardH: clamp(360px, 62vh, 600px);
+            position: relative;
+            height: min(760px, 86vh);
+            max-width: 100vw;
+            margin: 0 auto;
+            overflow: hidden;
+            contain: layout paint;
+            touch-action: pan-y;
+        }
+
+        .mzaCarousel-viewport {
+            position: relative;
+            height: 100%;
+            overflow: hidden;
+            outline: none;
+        }
+
+        .mzaCarousel-track {
+            position: relative;
+            height: calc(100% - var(--mzaPagH));
+            overflow: hidden;
+            perspective: 1200px;
+            transform-style: preserve-3d;
+        }
+
+        .mzaCarousel-slide {
+            position: absolute;
+            top: calc(50% + 5px);
+            left: 50%;
+            width: var(--mzaC-slideW);
+            height: min(var(--mzaCardH), calc(100% - 48px));
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+            border-radius: 18px;
+            transform-style: preserve-3d;
+            will-change: transform, filter;
+        }
+
+        .mzaCard {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            border-radius: inherit;
+            background: var(--mzaC-glass);
+            box-shadow: 0 22px 60px rgba(0, 0, 0, 0.48);
+            backdrop-filter: saturate(120%);
+            cursor: grab;
+        }
+
+        .mzaCard::before {
+            content: "";
+            position: absolute;
+            inset: -2%;
+            background-image: var(--mzaCard-bg);
+            background-size: cover;
+            background-position: center;
+            filter: contrast(1.03) saturate(1.08) brightness(0.88);
+            transform: scale(1.16) translate3d(var(--mzaParBgX, 0px), var(--mzaParBgY, 0px), 0);
+            transition: transform 800ms cubic-bezier(0.2, 0.7, 0, 1), filter 800ms cubic-bezier(0.2, 0.7, 0, 1);
+        }
+
+        .mzaCard::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(0, 0, 0, 0.22), rgba(0, 0, 0, 0.62) 58%, rgba(0, 0, 0, 0.38));
+        }
+
+        .mzaCard-head {
+            position: absolute;
+            inset: 24px auto auto 24px;
+            z-index: 2;
+        }
+
+        .mzaCard-title {
+            margin: 0;
+            font-size: clamp(26px, 4vw, 48px);
+            font-weight: 800;
+            line-height: 1.05;
+            color: white;
+            text-shadow: 2px 2px 18px rgba(0, 0, 0, 0.7);
+        }
+
+        .mzaCard-kicker {
+            margin: 0.65rem 0 0;
+            color: var(--mzaC-accent);
+            font-size: 0.9rem;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            text-shadow: 1px 1px 12px rgba(0, 0, 0, 0.7);
+        }
+
+        .mzaCard-text {
+            position: absolute;
+            z-index: 2;
+            inset: auto 24px 104px 24px;
+            max-width: 62ch;
+            padding: 18px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            border-radius: 10px;
+            background: rgba(0, 0, 0, 0.42);
+            backdrop-filter: none;
+            color: #e5e7eb;
+        }
+
+        .mzaCard-tags {
+            position: absolute;
+            z-index: 2;
+            inset: auto 180px 26px auto;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: flex-end;
+            max-width: min(46%, 360px);
+            gap: 0.5rem;
+        }
+
+        .mzaCard-tag {
+            padding: 0.25rem 0.7rem;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.12);
+            color: #dbeafe;
+            font-size: 0.75rem;
+            font-weight: 700;
+        }
+
+        .mzaCard-actions {
+            position: absolute;
+            z-index: 2;
+            inset: auto 24px 20px 24px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.75rem;
+        }
+
+        .mzaBtn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            border: 1px solid rgba(255, 255, 255, 0.18);
+            border-radius: 999px;
+            padding: 0.75rem 1rem;
+            color: white;
+            font-weight: 700;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            box-shadow: 0 8px 24px rgba(157, 78, 221, 0.28);
+            transition: transform 0.2s ease, opacity 0.2s ease;
+        }
+
+        .mzaBtn:hover {
+            transform: translateY(-2px);
+            opacity: 0.92;
+        }
+
+        .mzaBtn-secondary {
+            background: rgba(0, 0, 0, 0.45);
+        }
+
+        .mzaCarousel-controls {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            pointer-events: none;
+        }
+
+        .mzaCarousel-prev,
+        .mzaCarousel-next {
+            pointer-events: auto;
+            width: 46px;
+            height: 46px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: none;
+            color: var(--mzaC-fg);
+            font-size: 26px;
+            display: grid;
+            place-items: center;
+            cursor: pointer;
+            transition: background 0.2s ease, transform 0.2s ease;
+        }
+
+        .mzaCarousel-prev {
+            margin-left: 4px;
+        }
+
+        .mzaCarousel-next {
+            margin-right: 4px;
+        }
+
+        .mzaCarousel-prev:hover,
+        .mzaCarousel-next:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.16);
+        }
+
+        .mzaCarousel-pagination {
+            position: absolute;
+            left: 0;
+            right: 0;
+            bottom: 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .mzaCarousel-dot {
+            width: 11px;
+            height: 11px;
+            border: 0;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.26);
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .mzaCarousel-dot[aria-selected="true"] {
+            transform: scale(1.35);
+            background: linear-gradient(180deg, var(--mzaC-accent), var(--mzaC-accent2));
+        }
+
+        .mzaCarousel-progress {
+            position: absolute;
+            left: 12%;
+            right: 12%;
+            bottom: 0;
+            height: 3px;
+            overflow: hidden;
+            background: rgba(255, 255, 255, 0.08);
+        }
+
+        .mzaCarousel-progressBar {
+            display: block;
+            width: 100%;
+            height: 100%;
+            transform: scaleX(0);
+            transform-origin: left;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+        }
+
+        .mzaCarousel-slide[data-state="active"] .mzaCard::before {
+            filter: contrast(1.07) saturate(1.15) brightness(1.02);
+        }
+
+        .mzaPar-1,
+        .mzaPar-2,
+        .mzaPar-3 {
+            will-change: transform;
+            transition: transform 500ms cubic-bezier(0.2, 0.7, 0, 1);
+        }
+
+        .mzaPar-1 {
+            transform: translate3d(calc(var(--mzaParX, 0px) * 0.35), calc(var(--mzaParY, 0px) * 0.35), 0);
+        }
+
+        .mzaPar-2 {
+            transform: translate3d(calc(var(--mzaParX, 0px) * 0.25), calc(var(--mzaParY, 0px) * 0.25), 0);
+        }
+
+        .mzaPar-3 {
+            transform: translate3d(calc(var(--mzaParX, 0px) * 0.18), calc(var(--mzaParY, 0px) * 0.18), 0);
+        }
+
+        @media (max-width: 768px) {
+            .mzaCarousel {
+                height: 660px;
+            }
+
+            .mzaCard-head {
+                inset: 18px auto auto 18px;
+            }
+
+            .mzaCard-text {
+                inset: auto 18px 128px 18px;
+                max-height: 118px;
+            }
+
+            .mzaCard-tags {
+                inset: auto 18px 78px 18px;
+                max-width: none;
+            }
+
+            .mzaCard-actions {
+                inset: auto 18px 20px 18px;
+            }
         }
 
         .skill-bar {
@@ -175,8 +505,11 @@
         <div class="absolute inset-0 bg-black bg-opacity-50"></div>
         <div class="container mx-auto relative z-10 animate-fade-in">
             <div class="max-w-2xl mx-auto">
-                <img src="./imagenes/cool_lima.png" alt="Retrato ilustrado de Adriel"
-                     class="img-logo rounded-full border-4 border-black w-40 h-40 object-cover mb-6 shadow-lg mx-auto">
+                <div class="hero-card">
+                    <img src="./imagenes/cool_lima.png" alt="Retrato ilustrado de Adriel"
+                         class="img-logo border-4 border-black shadow-lg">
+                    <div class="hero-card-glow"></div>
+                </div>
                 <h1 class="text-4xl md:text-6xl font-bold mb-4 text-white">
                     Hola, soy <span class="text-red-500">Adriel</span>
                 </h1>
@@ -206,7 +539,7 @@
     <!-- Projects Section -->
     <section id="projects" class="py-20 bg-gray-900">
         <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
+            <div class="text-center mb-10">
                 <h2 class="text-3xl md:text-4xl font-bold mb-4 text-white">
                     <span class="pixel-font text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-600">Proyectos</span>
                 </h2>
@@ -215,152 +548,134 @@
                 </p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <!-- Project 1 -->
-                <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.1s;">
-                    <div class="project-image relative overflow-hidden">
-                        <img src="./imagenes/croc.png" alt="Captura del juego Croc Rouge"
-                             class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                        <div class="absolute inset-0 flex items-end p-4">
-                            <h3 class="text-xl font-bold text-white">Croc Rouge</h3>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <p class="text-gray-400 mb-4">Mi primer prototipo: un arcade de naves desarrollado &iacute;ntegramente por m&iacute;.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
-                            <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
-                            <span class="px-3 py-1 bg-gray-800 text-yellow-300 text-xs rounded-full">Arcade</span>
-                        </div>
-                        <div class="mt-4 flex justify-between">
-                            <a href="https://aarandez.itch.io/croc-rouge" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
-                            <a href="https://aarandez.itch.io/croc-rouge/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
-                        </div>
+            <div class="mzaCarousel" id="projectsCarousel" aria-roledescription="carousel" aria-label="Proyectos destacados">
+                <div class="mzaCarousel-viewport" tabindex="0">
+                    <div class="mzaCarousel-track">
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="1 de 6">
+                            <div class="mzaCard" style="--mzaCard-bg:url('./imagenes/croc.png');">
+                                <header class="mzaCard-head mzaPar-1">
+                                    <h3 class="mzaCard-title">Croc Rouge</h3>
+                                    <p class="mzaCard-kicker">Arcade shooter</p>
+                                </header>
+                                <p class="mzaCard-text mzaPar-2">Mi primer prototipo: un arcade de naves desarrollado &iacute;ntegramente por m&iacute;.</p>
+                                <div class="mzaCard-tags mzaPar-2">
+                                    <span class="mzaCard-tag">Unity</span>
+                                    <span class="mzaCard-tag">C#</span>
+                                    <span class="mzaCard-tag">Arcade</span>
+                                </div>
+                                <footer class="mzaCard-actions mzaPar-3">
+                                    <a href="https://aarandez.itch.io/croc-rouge" target="_blank" rel="noopener noreferrer" class="mzaBtn mzaBtn-secondary">Ver proyecto</a>
+                                    <a href="https://aarandez.itch.io/croc-rouge/purchase" target="_blank" rel="noopener noreferrer" class="mzaBtn">Jugar o descargar</a>
+                                </footer>
+                            </div>
+                        </article>
+
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="2 de 6">
+                            <div class="mzaCard" style="--mzaCard-bg:url('./imagenes/color.png');">
+                                <header class="mzaCard-head mzaPar-1">
+                                    <h3 class="mzaCard-title">Color Dimensions</h3>
+                                    <p class="mzaCard-kicker">Top down shooter</p>
+                                </header>
+                                <p class="mzaCard-text mzaPar-2">Un prototipo simple de shooter con vista cenital.</p>
+                                <div class="mzaCard-tags mzaPar-2">
+                                    <span class="mzaCard-tag">Unity</span>
+                                    <span class="mzaCard-tag">C#</span>
+                                    <span class="mzaCard-tag">Top Down</span>
+                                </div>
+                                <footer class="mzaCard-actions mzaPar-3">
+                                    <a href="https://aarandez.itch.io/color-dimensions" target="_blank" rel="noopener noreferrer" class="mzaBtn mzaBtn-secondary">Ver proyecto</a>
+                                    <a href="https://aarandez.itch.io/color-dimensions/purchase" target="_blank" rel="noopener noreferrer" class="mzaBtn">Jugar o descargar</a>
+                                </footer>
+                            </div>
+                        </article>
+
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="3 de 6">
+                            <div class="mzaCard" style="--mzaCard-bg:url('./imagenes/dont.png');">
+                                <header class="mzaCard-head mzaPar-1">
+                                    <h3 class="mzaCard-title">Don't Fall</h3>
+                                    <p class="mzaCard-kicker">Party game</p>
+                                </header>
+                                <p class="mzaCard-text mzaPar-2">Don't Fall es un juego de estilo party basado en una mec&aacute;nica de Crash Bash: sacar a los dem&aacute;s jugadores de la plataforma.</p>
+                                <div class="mzaCard-tags mzaPar-2">
+                                    <span class="mzaCard-tag">Unity</span>
+                                    <span class="mzaCard-tag">C#</span>
+                                    <span class="mzaCard-tag">Party Game</span>
+                                </div>
+                                <footer class="mzaCard-actions mzaPar-3">
+                                    <a href="https://aarandez.itch.io/dont-fall" target="_blank" rel="noopener noreferrer" class="mzaBtn mzaBtn-secondary">Ver proyecto</a>
+                                    <a href="https://aarandez.itch.io/dont-fall/purchase" target="_blank" rel="noopener noreferrer" class="mzaBtn">Jugar o descargar</a>
+                                </footer>
+                            </div>
+                        </article>
+
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="4 de 6">
+                            <div class="mzaCard" style="--mzaCard-bg:url('./imagenes/la1ra.png');">
+                                <header class="mzaCard-head mzaPar-1">
+                                    <h3 class="mzaCard-title">LaPrimeraVez</h3>
+                                    <p class="mzaCard-kicker">Minimalist</p>
+                                </header>
+                                <p class="mzaCard-text mzaPar-2">Una experiencia minimalista que representa el concepto de encontrar el primer amor.</p>
+                                <div class="mzaCard-tags mzaPar-2">
+                                    <span class="mzaCard-tag">Unity</span>
+                                    <span class="mzaCard-tag">C#</span>
+                                    <span class="mzaCard-tag">Minimalist</span>
+                                </div>
+                                <footer class="mzaCard-actions mzaPar-3">
+                                    <a href="https://aarandez.itch.io/laprimeravez" target="_blank" rel="noopener noreferrer" class="mzaBtn mzaBtn-secondary">Ver proyecto</a>
+                                    <a href="https://aarandez.itch.io/laprimeravez/purchase" target="_blank" rel="noopener noreferrer" class="mzaBtn">Jugar o descargar</a>
+                                </footer>
+                            </div>
+                        </article>
+
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="5 de 6">
+                            <div class="mzaCard" style="--mzaCard-bg:url('./imagenes/pon.png');">
+                                <header class="mzaCard-head mzaPar-1">
+                                    <h3 class="mzaCard-title">PON</h3>
+                                    <p class="mzaCard-kicker">Mobile platformer</p>
+                                </header>
+                                <p class="mzaCard-text mzaPar-2">PON es un juego de plataformas para dispositivos m&oacute;viles.</p>
+                                <div class="mzaCard-tags mzaPar-2">
+                                    <span class="mzaCard-tag">Unity</span>
+                                    <span class="mzaCard-tag">C#</span>
+                                    <span class="mzaCard-tag">Mobile</span>
+                                </div>
+                                <footer class="mzaCard-actions mzaPar-3">
+                                    <a href="https://aarandez.itch.io/pon" target="_blank" rel="noopener noreferrer" class="mzaBtn mzaBtn-secondary">Ver proyecto</a>
+                                    <a href="https://aarandez.itch.io/pon/purchase" target="_blank" rel="noopener noreferrer" class="mzaBtn">Jugar o descargar</a>
+                                </footer>
+                            </div>
+                        </article>
+
+                        <article class="mzaCarousel-slide" role="group" aria-roledescription="slide" aria-label="6 de 6">
+                            <div class="mzaCard" style="--mzaCard-bg:url('./imagenes/repel.png');">
+                                <header class="mzaCard-head mzaPar-1">
+                                    <h3 class="mzaCard-title">Repel, Dunk n' Build</h3>
+                                    <p class="mzaCard-kicker">Virtual Reality</p>
+                                </header>
+                                <p class="mzaCard-text mzaPar-2">Tres mec&aacute;nicas XR para jugar con Oculus y un controlador Leap Motion.</p>
+                                <div class="mzaCard-tags mzaPar-2">
+                                    <span class="mzaCard-tag">Unity</span>
+                                    <span class="mzaCard-tag">C#</span>
+                                    <span class="mzaCard-tag">Virtual Reality</span>
+                                    <span class="mzaCard-tag">Oculus</span>
+                                    <span class="mzaCard-tag">Leap</span>
+                                </div>
+                                <footer class="mzaCard-actions mzaPar-3">
+                                    <a href="https://live-games.itch.io/repel-dunk-n-build" target="_blank" rel="noopener noreferrer" class="mzaBtn mzaBtn-secondary">Ver proyecto</a>
+                                    <a href="https://live-games.itch.io/repel-dunk-n-build/purchase" target="_blank" rel="noopener noreferrer" class="mzaBtn">Jugar o descargar</a>
+                                </footer>
+                            </div>
+                        </article>
                     </div>
                 </div>
 
-                <!-- Project 2 -->
-                <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.2s;">
-                    <div class="project-image relative overflow-hidden">
-                        <img src="./imagenes/color.png" alt="Captura del juego Color Dimensions"
-                             class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                        <div class="absolute inset-0 flex items-end p-4">
-                            <h3 class="text-xl font-bold text-white">Color Dimensions</h3>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <p class="text-gray-400 mb-4">Un prototipo simple de shooter con vista cenital.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
-                            <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
-                            <span class="px-3 py-1 bg-gray-800 text-yellow-300 text-xs rounded-full">Top Down</span>
-                        </div>
-                        <div class="mt-4 flex justify-between">
-                            <a href="https://aarandez.itch.io/color-dimensions" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
-                            <a href="https://aarandez.itch.io/color-dimensions/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
-                        </div>
-                    </div>
+                <div class="mzaCarousel-controls" aria-label="Controles del carrusel">
+                    <button class="mzaCarousel-prev" aria-label="Proyecto anterior" type="button">&lsaquo;</button>
+                    <button class="mzaCarousel-next" aria-label="Proyecto siguiente" type="button">&rsaquo;</button>
                 </div>
 
-                <!-- Project 3 -->
-                <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.3s;">
-                    <div class="project-image relative overflow-hidden">
-                        <img src="./imagenes/dont.png" alt="Captura del juego Don't Fall"
-                             class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                        <div class="absolute inset-0 flex items-end p-4">
-                            <h3 class="text-xl font-bold text-white">Don't Fall</h3>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <p class="text-gray-400 mb-4">Don't Fall es un juego de estilo party basado en una mec&aacute;nica de Crash Bash: sacar a los dem&aacute;s jugadores de la plataforma.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
-                            <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
-                            <span class="px-3 py-1 bg-gray-800 text-yellow-300 text-xs rounded-full">Party Game</span>
-                        </div>
-                        <div class="mt-4 flex justify-between">
-                            <a href="https://aarandez.itch.io/dont-fall" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
-                            <a href="https://aarandez.itch.io/dont-fall/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 4 -->
-                <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.1s;">
-                    <div class="project-image relative overflow-hidden">
-                        <img src="./imagenes/la1ra.png" alt="Captura del juego LaPrimeraVez"
-                             class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                        <div class="absolute inset-0 flex items-end p-4">
-                            <h3 class="text-xl font-bold text-white">LaPrimeraVez</h3>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <p class="text-gray-400 mb-4">Una experiencia minimalista que representa el concepto de encontrar el primer amor.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
-                            <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
-                            <span class="px-3 py-1 bg-gray-800 text-green-300 text-xs rounded-full">Minimalist</span>
-                        </div>
-                        <div class="mt-4 flex justify-between">
-                            <a href="https://aarandez.itch.io/laprimeravez" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
-                            <a href="https://aarandez.itch.io/laprimeravez/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 5 -->
-                <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.1s;">
-                    <div class="project-image relative overflow-hidden">
-                        <img src="./imagenes/pon.png" alt="Captura del juego PON"
-                             class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                        <div class="absolute inset-0 flex items-end p-4">
-                            <h3 class="text-xl font-bold text-white">PON</h3>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <p class="text-gray-400 mb-4">PON es un juego de plataformas para dispositivos m&oacute;viles.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
-                            <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
-                            <span class="px-3 py-1 bg-gray-800 text-green-300 text-xs rounded-full">Mobile</span>
-                        </div>
-                        <div class="mt-4 flex justify-between">
-                            <a href="https://aarandez.itch.io/pon" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
-                            <a href="https://aarandez.itch.io/pon/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Project 6 -->
-                <div class="project-card rounded-lg overflow-hidden animate-fade-in" style="animation-delay: 0.1s;">
-                    <div class="project-image relative overflow-hidden">
-                        <img src="./imagenes/repel.png" alt="Captura del proyecto Repel, Dunk n' Build"
-                             class="w-full h-60 object-cover transition-transform duration-500 hover:scale-105">
-                        <div class="absolute inset-0 bg-gradient-to-t from-black to-transparent opacity-80"></div>
-                        <div class="absolute inset-0 flex items-end p-4">
-                            <h3 class="text-xl font-bold text-white">Repel, Dunk n' Build</h3>
-                        </div>
-                    </div>
-                    <div class="p-6">
-                        <p class="text-gray-400 mb-4">Tres mec&aacute;nicas XR para jugar con Oculus y un controlador Leap Motion.</p>
-                        <div class="flex flex-wrap gap-2">
-                            <span class="px-3 py-1 bg-gray-800 text-cyan-300 text-xs rounded-full">Unity</span>
-                            <span class="px-3 py-1 bg-gray-800 text-purple-300 text-xs rounded-full">C#</span>
-                            <span class="px-3 py-1 bg-gray-800 text-green-300 text-xs rounded-full">Virtual Reality</span>
-                            <span class="px-3 py-1 bg-gray-800 text-yellow-300 text-xs rounded-full">Oculus</span>
-                            <span class="px-3 py-1 bg-gray-800 text-pink-300 text-xs rounded-full">Leap</span>
-                        </div>
-                        <div class="mt-4 flex justify-between">
-                            <a href="https://live-games.itch.io/repel-dunk-n-build" target="_blank" rel="noopener noreferrer" class="text-cyan-400 hover:text-cyan-300 text-sm font-medium">Ver proyecto</a>
-                            <a href="https://live-games.itch.io/repel-dunk-n-build/purchase" target="_blank" rel="noopener noreferrer" class="text-purple-400 hover:text-purple-300 text-sm font-medium">Jugar o descargar</a>
-                        </div>
-                    </div>
-                </div>
+                <div class="mzaCarousel-pagination" role="tablist" aria-label="Navegaci&oacute;n de proyectos"></div>
+                <div class="mzaCarousel-progress" aria-hidden="true"><span class="mzaCarousel-progressBar"></span></div>
             </div>
         </div>
     </section>
@@ -532,6 +847,62 @@
         // Check on scroll
         window.addEventListener('scroll', animateOnScroll);
 
+        // 3D tilt effect for hero image
+        const heroCard = document.querySelector('.hero-card');
+        let heroCardBounds;
+
+        const rotateHeroCardToMouse = (event) => {
+            if (!heroCardBounds || !heroCard) return;
+
+            const leftX = event.clientX - heroCardBounds.x;
+            const topY = event.clientY - heroCardBounds.y;
+            const center = {
+                x: leftX - heroCardBounds.width / 2,
+                y: topY - heroCardBounds.height / 2
+            };
+            const distance = Math.max(1, Math.sqrt(center.x ** 2 + center.y ** 2));
+            const glow = heroCard.querySelector('.hero-card-glow');
+
+            heroCard.style.transform = `
+                scale3d(1.07, 1.07, 1.07)
+                rotate3d(
+                    ${center.y / 100},
+                    ${-center.x / 100},
+                    0,
+                    ${Math.log(distance) * 2}deg
+                )
+            `;
+
+            if (glow) {
+                glow.style.backgroundImage = `
+                    radial-gradient(
+                        circle at
+                        ${center.x * 2 + heroCardBounds.width / 2}px
+                        ${center.y * 2 + heroCardBounds.height / 2}px,
+                        rgba(255, 255, 255, 0.45),
+                        rgba(0, 0, 0, 0.06)
+                    )
+                `;
+            }
+        };
+
+        if (heroCard) {
+            heroCard.addEventListener('mouseenter', () => {
+                heroCardBounds = heroCard.getBoundingClientRect();
+                document.addEventListener('mousemove', rotateHeroCardToMouse);
+            });
+
+            heroCard.addEventListener('mouseleave', () => {
+                document.removeEventListener('mousemove', rotateHeroCardToMouse);
+                heroCard.style.transform = '';
+
+                const glow = heroCard.querySelector('.hero-card-glow');
+                if (glow) {
+                    glow.style.backgroundImage = 'radial-gradient(circle at 50% -20%, rgba(255, 255, 255, 0.22), rgba(0, 0, 0, 0.06))';
+                }
+            });
+        }
+
         // Mobile menu toggle
         const mobileMenuButton = document.querySelector('button.md\\:hidden');
         const mobileMenu = document.querySelector('#mobile-menu');
@@ -546,6 +917,313 @@
                 mobileMenuButton.setAttribute('aria-expanded', 'false');
             });
         });
+
+        class MzaCarousel {
+            constructor(root) {
+                this.root = root;
+                this.viewport = root.querySelector('.mzaCarousel-viewport');
+                this.track = root.querySelector('.mzaCarousel-track');
+                this.slides = Array.from(root.querySelectorAll('.mzaCarousel-slide'));
+                this.prevBtn = root.querySelector('.mzaCarousel-prev');
+                this.nextBtn = root.querySelector('.mzaCarousel-next');
+                this.pagination = root.querySelector('.mzaCarousel-pagination');
+                this.progressBar = root.querySelector('.mzaCarousel-progressBar');
+                this.n = this.slides.length;
+                this.opts = {
+                    gap: 28,
+                    peek: 0.15,
+                    rotateY: 34,
+                    zDepth: 150,
+                    scaleDrop: 0.09,
+                    blurMax: 0,
+                    activeLeftBias: 0.12,
+                    interval: 5200,
+                    transitionMs: 900
+                };
+                this.state = {
+                    index: 0,
+                    pos: 0,
+                    width: 0,
+                    gap: this.opts.gap,
+                    dragging: false,
+                    pointerId: null,
+                    x0: 0,
+                    v: 0,
+                    t0: 0,
+                    animating: false,
+                    hovering: false,
+                    startTime: 0,
+                    pausedAt: 0
+                };
+
+                if (this.n) this.init();
+            }
+
+            init() {
+                this.setupDots();
+                this.bind();
+                this.preloadImages();
+                this.measure();
+                this.goTo(0, false);
+                this.startCycle();
+                this.loop();
+            }
+
+            setupDots() {
+                this.pagination.innerHTML = '';
+                this.dots = this.slides.map((_, i) => {
+                    const button = document.createElement('button');
+                    button.type = 'button';
+                    button.className = 'mzaCarousel-dot';
+                    button.setAttribute('role', 'tab');
+                    button.setAttribute('aria-label', `Ir al proyecto ${i + 1}`);
+                    button.addEventListener('click', () => this.goTo(i));
+                    this.pagination.appendChild(button);
+                    return button;
+                });
+            }
+
+            bind() {
+                this.prevBtn.addEventListener('click', () => this.prev());
+                this.nextBtn.addEventListener('click', () => this.next());
+
+                this.root.addEventListener('keydown', (event) => {
+                    if (event.key === 'ArrowLeft') this.prev();
+                    if (event.key === 'ArrowRight') this.next();
+                });
+
+                this.viewport.addEventListener('pointerdown', (event) => this.onDragStart(event));
+                this.viewport.addEventListener('pointermove', (event) => this.onDragMove(event));
+                this.viewport.addEventListener('pointerup', (event) => this.onDragEnd(event));
+                this.viewport.addEventListener('pointercancel', (event) => this.onDragEnd(event));
+                this.viewport.addEventListener('pointermove', (event) => this.onTilt(event));
+
+                this.root.addEventListener('mouseenter', () => {
+                    this.state.hovering = true;
+                    this.state.pausedAt = performance.now();
+                });
+
+                this.root.addEventListener('mouseleave', () => {
+                    if (this.state.pausedAt) {
+                        this.state.startTime += performance.now() - this.state.pausedAt;
+                        this.state.pausedAt = 0;
+                    }
+                    this.state.hovering = false;
+                });
+
+                const resize = () => {
+                    this.measure();
+                    this.render(true);
+                };
+
+                if ('ResizeObserver' in window) {
+                    this.resizeObserver = new ResizeObserver(resize);
+                    this.resizeObserver.observe(this.viewport);
+                } else {
+                    window.addEventListener('resize', resize);
+                }
+            }
+
+            preloadImages() {
+                this.slides.forEach((slide) => {
+                    const card = slide.querySelector('.mzaCard');
+                    const bg = getComputedStyle(card).getPropertyValue('--mzaCard-bg');
+                    const match = /url\((?:'|")?([^'")]+)(?:'|")?\)/.exec(bg);
+                    if (match && match[1]) {
+                        const img = new Image();
+                        img.src = match[1];
+                    }
+                });
+            }
+
+            measure() {
+                const viewRect = this.viewport.getBoundingClientRect();
+                const pagRect = this.pagination.getBoundingClientRect();
+                const pagSpace = pagRect.height + 42;
+                const availableHeight = viewRect.height - pagSpace;
+                const cardHeight = Math.max(330, Math.min(620, Math.round(availableHeight)));
+
+                this.state.width = viewRect.width;
+                this.slideW = Math.min(880, this.state.width * (1 - this.opts.peek * 2));
+                this.root.style.setProperty('--mzaPagH', `${pagSpace}px`);
+                this.root.style.setProperty('--mzaCardH', `${cardHeight}px`);
+            }
+
+            onTilt(event) {
+                const rect = this.viewport.getBoundingClientRect();
+                const mx = (event.clientX - rect.left) / rect.width - 0.5;
+                const my = (event.clientY - rect.top) / rect.height - 0.5;
+                this.root.style.setProperty('--mzaTiltX', (my * -6).toFixed(3));
+                this.root.style.setProperty('--mzaTiltY', (mx * 6).toFixed(3));
+            }
+
+            onDragStart(event) {
+                if (event.target.closest('a, button')) return;
+                if (event.pointerType === 'mouse' && event.button !== 0) return;
+
+                event.preventDefault();
+                this.state.dragging = true;
+                this.state.pointerId = event.pointerId;
+                this.viewport.setPointerCapture(event.pointerId);
+                this.state.x0 = event.clientX;
+                this.state.t0 = performance.now();
+                this.state.v = 0;
+                this.state.pausedAt = performance.now();
+            }
+
+            onDragMove(event) {
+                if (!this.state.dragging || event.pointerId !== this.state.pointerId) return;
+
+                const dx = event.clientX - this.state.x0;
+                const dt = Math.max(16, performance.now() - this.state.t0);
+                const slideSpan = this.slideW + this.opts.gap;
+
+                this.state.v = dx / dt;
+                this.state.pos = this.mod(this.state.index - dx / slideSpan, this.n);
+                this.render();
+            }
+
+            onDragEnd(event) {
+                if (!this.state.dragging || event.pointerId !== this.state.pointerId) return;
+
+                this.state.dragging = false;
+                try {
+                    this.viewport.releasePointerCapture(this.state.pointerId);
+                } catch {}
+
+                if (this.state.pausedAt) {
+                    this.state.startTime += performance.now() - this.state.pausedAt;
+                    this.state.pausedAt = 0;
+                }
+
+                const velocity = this.state.v;
+                const target = Math.round(this.state.pos - Math.sign(velocity) * (Math.abs(velocity) > 0.18 ? 0.5 : 0));
+                this.goTo(this.mod(target, this.n));
+            }
+
+            startCycle() {
+                this.state.startTime = performance.now();
+                this.renderProgress(0);
+            }
+
+            loop() {
+                const step = (time) => {
+                    if (!this.state.dragging && !this.state.hovering && !this.state.animating) {
+                        const elapsed = time - this.state.startTime;
+                        const progress = Math.min(1, elapsed / this.opts.interval);
+                        this.renderProgress(progress);
+                        if (elapsed >= this.opts.interval) this.next();
+                    }
+                    requestAnimationFrame(step);
+                };
+                requestAnimationFrame(step);
+            }
+
+            renderProgress(progress) {
+                this.progressBar.style.transform = `scaleX(${progress})`;
+            }
+
+            prev() {
+                this.goTo(this.mod(this.state.index - 1, this.n));
+            }
+
+            next() {
+                this.goTo(this.mod(this.state.index + 1, this.n));
+            }
+
+            goTo(index, animate = true) {
+                const start = this.state.pos || this.state.index;
+                const end = this.nearest(start, index);
+                const duration = animate ? this.opts.transitionMs : 0;
+                const startTime = performance.now();
+                const ease = (x) => 1 - Math.pow(1 - x, 4);
+
+                this.state.animating = true;
+
+                const step = (now) => {
+                    const t = Math.min(1, (now - startTime) / duration);
+                    const p = duration ? ease(t) : 1;
+                    this.state.pos = start + (end - start) * p;
+                    this.render();
+
+                    if (t < 1) {
+                        requestAnimationFrame(step);
+                    } else {
+                        this.afterSnap(index);
+                    }
+                };
+
+                requestAnimationFrame(step);
+            }
+
+            afterSnap(index) {
+                this.state.index = this.mod(Math.round(index), this.n);
+                this.state.pos = this.state.index;
+                this.state.animating = false;
+                this.render(true);
+                this.startCycle();
+            }
+
+            nearest(from, target) {
+                let delta = target - Math.round(from);
+                if (delta > this.n / 2) delta -= this.n;
+                if (delta < -this.n / 2) delta += this.n;
+                return Math.round(from) + delta;
+            }
+
+            mod(index, count) {
+                return ((index % count) + count) % count;
+            }
+
+            render(markActive = false) {
+                const span = this.slideW + this.opts.gap;
+                const tiltX = parseFloat(this.root.style.getPropertyValue('--mzaTiltX') || 0);
+                const tiltY = parseFloat(this.root.style.getPropertyValue('--mzaTiltY') || 0);
+
+                this.slides.forEach((slide, i) => {
+                    let distance = i - this.state.pos;
+                    if (distance > this.n / 2) distance -= this.n;
+                    if (distance < -this.n / 2) distance += this.n;
+
+                    const weight = Math.max(0, 1 - Math.abs(distance) * 2);
+                    const biasActive = -this.slideW * this.opts.activeLeftBias * weight;
+                    const tx = distance * span + biasActive;
+                    const depth = -Math.abs(distance) * this.opts.zDepth;
+                    const rotate = -distance * this.opts.rotateY;
+                    const scale = 1 - Math.min(Math.abs(distance) * this.opts.scaleDrop, 0.42);
+                    const blur = Math.min(Math.abs(distance) * this.opts.blurMax, this.opts.blurMax);
+
+                    slide.style.transform = `translate3d(${tx}px,-50%,${depth}px) rotateY(${rotate}deg) scale(${scale})`;
+                    slide.style.filter = blur > 0 ? `blur(${blur}px)` : 'none';
+                    slide.style.zIndex = String(Math.round(1000 - Math.abs(distance) * 10));
+
+                    if (markActive) {
+                        slide.dataset.state = this.state.index === i ? 'active' : 'rest';
+                    }
+
+                    const card = slide.querySelector('.mzaCard');
+                    const parBase = Math.max(-1, Math.min(1, -distance));
+                    const parX = parBase * 48 + tiltY * 2;
+                    const parY = tiltX * -1.5;
+                    const bgX = parBase * -64 + tiltY * -2.4;
+
+                    card.style.setProperty('--mzaParX', `${parX.toFixed(2)}px`);
+                    card.style.setProperty('--mzaParY', `${parY.toFixed(2)}px`);
+                    card.style.setProperty('--mzaParBgX', `${bgX.toFixed(2)}px`);
+                    card.style.setProperty('--mzaParBgY', `${(parY * 0.35).toFixed(2)}px`);
+                });
+
+                const active = this.mod(Math.round(this.state.pos), this.n);
+                this.dots.forEach((dot, i) => {
+                    dot.setAttribute('aria-selected', i === active ? 'true' : 'false');
+                });
+            }
+        }
+
+        const projectsCarousel = document.querySelector('#projectsCarousel');
+        if (projectsCarousel) {
+            new MzaCarousel(projectsCarousel);
+        }
 
         // Load itch.io game only after user interaction
         const loadGameButton = document.querySelector('#load-game');
@@ -566,5 +1244,7 @@
     </script>
 </body>
 </html>
+
+
 
 
