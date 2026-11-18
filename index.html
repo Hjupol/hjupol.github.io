@@ -469,6 +469,25 @@
                 transform: translateY(0);
             }
         }
+
+        /* Widget Estanque / Pecera Interactivo */
+        #pecera-container {
+            width: 400px;
+            max-width: 100%;
+            height: 300px;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+            cursor: pointer;
+            user-select: none;
+            touch-action: manipulation;
+        }
+
+        #pecera-container canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body class="min-h-screen">
@@ -948,7 +967,15 @@
     <!-- Footer -->
     <footer class="bg-black py-12">
         <div class="container mx-auto px-6">
-            <div class="flex flex-col md:flex-row justify-between items-center">
+            <!-- Widget Estanque / Pecera Interactivo -->
+            <div class="flex flex-col items-center justify-center mb-10">
+                <div id="pecera-container" title="Haz clic en el estanque para alimentar a los peces">
+                    <canvas id="pecera" width="400" height="300"></canvas>
+                </div>
+                <p class="text-xs text-gray-500 mt-3 font-mono">Haz clic para alimentar a los peces</p>
+            </div>
+
+            <div class="flex flex-col md:flex-row justify-between items-center border-t border-gray-900 pt-8">
                 <div class="mb-6 md:mb-0">
                     <a href="#home" class="text-2xl font-bold pixel-font text-transparent bg-clip-text bg-gradient-to-r from-red-500 to-purple-600">
                         Adriel Ar&aacute;ndez
@@ -1401,6 +1428,352 @@
                 gameFrame.replaceChildren(iframe);
             });
         }
+
+        // ==========================================
+        // WIDGET ESTANQUE INTERACTIVO (Estilo aBowman)
+        // ==========================================
+        (() => {
+            const canvas = document.getElementById('pecera');
+            if (!canvas) return;
+            const ctx = canvas.getContext('2d');
+
+            const config = {
+                backgroundColor: '#1f87ff',
+                numFish: 3,
+                fishColors: [
+                    '#6b0c00', // Pez 1 (Bordó)
+                    '#0fae3f', // Pez 2 (Verde)
+                    '#f45540', // Pez 3 (Coral)
+                    '#f45540', '#f45540', '#f45540', '#f45540', '#f45540', '#f45540', '#f45540'
+                ]
+            };
+
+            let foods = [];
+            let ripples = [];
+
+            function addFood(clientX, clientY) {
+                const rect = canvas.getBoundingClientRect();
+                const scaleX = canvas.width / rect.width;
+                const scaleY = canvas.height / rect.height;
+                const clickX = (clientX - rect.left) * scaleX;
+                const clickY = (clientY - rect.top) * scaleY;
+
+                const numPellets = 3;
+                for (let i = 0; i < numPellets; i++) {
+                    const angle = (Math.PI * 2 / numPellets) * i + Math.random() * 0.8;
+                    const speed = 0.12 + Math.random() * 0.12;
+                    foods.push({
+                        x: clickX,
+                        y: clickY,
+                        vx: Math.cos(angle) * speed,
+                        vy: Math.sin(angle) * speed,
+                        radius: 0.5,
+                        maxRadius: 2.8,
+                        life: 1.0
+                    });
+                }
+            }
+
+            // Al hacer clic o tocar, cae comida y se expande suavemente en la superficie
+            canvas.addEventListener('pointerdown', (e) => {
+                addFood(e.clientX, e.clientY);
+            });
+
+            // Ondas en el agua cuando un pez come
+            class Ripple {
+                constructor(x, y) {
+                    this.x = x;
+                    this.y = y;
+                    this.radius = 2;
+                    this.maxRadius = 22;
+                    this.alpha = 0.45;
+                }
+                update() {
+                    this.radius += 0.45;
+                    this.alpha -= 0.012;
+                }
+                draw() {
+                    if (this.alpha <= 0) return;
+                    ctx.beginPath();
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.strokeStyle = `rgba(255, 255, 255, ${this.alpha})`;
+                    ctx.lineWidth = 1.2;
+                    ctx.stroke();
+                }
+            }
+
+            // Clase Pez con cuerpo articulado (Cinemática Inversa)
+            class Fish {
+                constructor(color) {
+                    this.color = color;
+                    this.scale = 0.9 + Math.random() * 0.2;
+
+                    const startX = 60 + Math.random() * (canvas.width - 120);
+                    const startY = 60 + Math.random() * (canvas.height - 120);
+                    this.angle = Math.random() * Math.PI * 2;
+
+                    this.baseSpeed = 0.65 + Math.random() * 0.25;
+                    this.currentSpeed = this.baseSpeed;
+                    this.swimPhase = Math.random() * Math.PI * 2;
+                    this.glideOffset = Math.random() * 100;
+
+                    this.targetX = Math.random() * canvas.width;
+                    this.targetY = Math.random() * canvas.height;
+                    this.wanderTimer = 0;
+
+                    this.numSegments = 14;
+                    this.segmentSpacing = 2.8 * this.scale;
+                    this.segments = [];
+
+                    this.radii = [
+                        4.2, // 0: Punta cabeza
+                        5.3, // 1: Cabeza
+                        5.6, // 2: Branquias (aletas pectorales)
+                        5.3, // 3: Torso delantero
+                        4.7, // 4: Torso medio
+                        3.9, // 5: Abdomen
+                        3.0, // 6: Abdomen posterior
+                        2.2, // 7: Inicio pedúnculo caudal
+                        1.6, // 8: Pedúnculo caudal
+                        1.3, // 9: Base aleta trasera
+                        2.2, // 10: Aleta trasera (inicio)
+                        3.1, // 11: Aleta trasera (medio)
+                        3.5, // 12: Aleta trasera (ancho máximo)
+                        2.4  // 13: Punta aleta trasera
+                    ].map(r => r * this.scale);
+
+                    for (let i = 0; i < this.numSegments; i++) {
+                        this.segments.push({
+                            x: startX - Math.cos(this.angle) * (i * this.segmentSpacing),
+                            y: startY - Math.sin(this.angle) * (i * this.segmentSpacing),
+                            angle: this.angle
+                        });
+                    }
+                }
+
+                update() {
+                    let target = null;
+                    let desiredSpeed = this.baseSpeed;
+
+                    // 1. Buscar comida si hay en el estanque
+                    if (foods.length > 0) {
+                        let closestDist = Infinity;
+                        let closestIndex = -1;
+
+                        foods.forEach((food, index) => {
+                            const dist = Math.hypot(food.x - this.segments[0].x, food.y - this.segments[0].y);
+                            if (dist < closestDist) {
+                                closestDist = dist;
+                                closestIndex = index;
+                            }
+                        });
+
+                        if (closestIndex !== -1) {
+                            if (closestDist < 10) {
+                                ripples.push(new Ripple(foods[closestIndex].x, foods[closestIndex].y));
+                                foods.splice(closestIndex, 1);
+                            } else {
+                                target = { x: foods[closestIndex].x, y: foods[closestIndex].y };
+                                desiredSpeed = this.baseSpeed * 1.65;
+                            }
+                        }
+                    }
+
+                    // 2. Nado libre explorando el estanque
+                    if (!target) {
+                        this.wanderTimer--;
+                        const distToTarget = Math.hypot(this.targetX - this.segments[0].x, this.targetY - this.segments[0].y);
+
+                        if (this.wanderTimer <= 0 || distToTarget < 45) {
+                            this.targetX = 35 + Math.random() * (canvas.width - 70);
+                            this.targetY = 35 + Math.random() * (canvas.height - 70);
+                            this.wanderTimer = 120 + Math.random() * 180;
+                        }
+                        target = { x: this.targetX, y: this.targetY };
+                        desiredSpeed = this.baseSpeed;
+                    }
+
+                    this.glideOffset += 0.04;
+                    const speedVariation = 0.85 + Math.sin(this.glideOffset) * 0.2;
+                    this.currentSpeed += (desiredSpeed * speedVariation - this.currentSpeed) * 0.05;
+
+                    const head = this.segments[0];
+                    const desiredAngle = Math.atan2(target.y - head.y, target.x - head.x);
+                    let diff = desiredAngle - this.angle;
+                    while (diff < -Math.PI) diff += Math.PI * 2;
+                    while (diff > Math.PI) diff -= Math.PI * 2;
+
+                    const maxTurn = 0.045;
+                    this.angle += Math.max(-maxTurn, Math.min(maxTurn, diff * 0.06));
+
+                    this.swimPhase += 0.09 + (this.currentSpeed * 0.12);
+                    const headWiggle = Math.sin(this.swimPhase) * 0.11;
+                    const moveAngle = this.angle + headWiggle;
+
+                    head.x += Math.cos(moveAngle) * this.currentSpeed;
+                    head.y += Math.sin(moveAngle) * this.currentSpeed;
+                    head.angle = moveAngle;
+
+                    for (let i = 1; i < this.numSegments; i++) {
+                        const prev = this.segments[i - 1];
+                        const curr = this.segments[i];
+
+                        const dx = prev.x - curr.x;
+                        const dy = prev.y - curr.y;
+                        let segAngle = Math.atan2(dy, dx);
+
+                        const waveStrength = (i / this.numSegments) * 0.08;
+                        const wave = Math.sin(this.swimPhase - i * 0.55) * waveStrength;
+                        segAngle += wave;
+
+                        curr.angle = segAngle;
+                        curr.x = prev.x - Math.cos(segAngle) * this.segmentSpacing;
+                        curr.y = prev.y - Math.sin(segAngle) * this.segmentSpacing;
+                    }
+                }
+
+                draw() {
+                    ctx.fillStyle = this.color;
+
+                    // 1. Aletas pectorales apuntando hacia ATRÁS (hacia la cola)
+                    const finSeg = this.segments[2];
+                    const finFlap = Math.sin(this.swimPhase - 0.5) * 0.14;
+
+                    // Aleta izquierda
+                    ctx.save();
+                    ctx.translate(finSeg.x, finSeg.y);
+                    ctx.rotate(finSeg.angle);
+                    ctx.beginPath();
+                    ctx.ellipse(-2.5 * this.scale, -5.8 * this.scale, 5.2 * this.scale, 2.0 * this.scale, 0.55 + finFlap, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+
+                    // Aleta derecha
+                    ctx.save();
+                    ctx.translate(finSeg.x, finSeg.y);
+                    ctx.rotate(finSeg.angle);
+                    ctx.beginPath();
+                    ctx.ellipse(-2.5 * this.scale, 5.8 * this.scale, 5.2 * this.scale, 2.0 * this.scale, -0.55 - finFlap, 0, Math.PI * 2);
+                    ctx.fill();
+                    ctx.restore();
+
+                    // 2. Calcular puntos del contorno izquierdo y derecho
+                    const leftPoints = [];
+                    const rightPoints = [];
+
+                    for (let i = 0; i < this.numSegments; i++) {
+                        const seg = this.segments[i];
+                        const r = this.radii[i];
+                        const perpAngle = seg.angle + Math.PI / 2;
+
+                        leftPoints.push({
+                            x: seg.x + Math.cos(perpAngle) * r,
+                            y: seg.y + Math.sin(perpAngle) * r
+                        });
+                        rightPoints.push({
+                            x: seg.x - Math.cos(perpAngle) * r,
+                            y: seg.y - Math.sin(perpAngle) * r
+                        });
+                    }
+
+                    // 3. Dibujar el cuerpo continuo sin cortes en la cabeza
+                    const head = this.segments[0];
+                    const snoutTipX = head.x + Math.cos(head.angle) * (this.radii[0] * 1.15);
+                    const snoutTipY = head.y + Math.sin(head.angle) * (this.radii[0] * 1.15);
+
+                    ctx.beginPath();
+                    ctx.moveTo(leftPoints[0].x, leftPoints[0].y);
+                    ctx.quadraticCurveTo(snoutTipX, snoutTipY, rightPoints[0].x, rightPoints[0].y);
+
+                    for (let i = 0; i < this.numSegments - 1; i++) {
+                        const xc = (rightPoints[i].x + rightPoints[i + 1].x) / 2;
+                        const yc = (rightPoints[i].y + rightPoints[i + 1].y) / 2;
+                        ctx.quadraticCurveTo(rightPoints[i].x, rightPoints[i].y, xc, yc);
+                    }
+                    ctx.lineTo(rightPoints[this.numSegments - 1].x, rightPoints[this.numSegments - 1].y);
+
+                    const tailTip = this.segments[this.numSegments - 1];
+                    ctx.lineTo(
+                        tailTip.x - Math.cos(tailTip.angle) * (2.5 * this.scale),
+                        tailTip.y - Math.sin(tailTip.angle) * (2.5 * this.scale)
+                    );
+
+                    ctx.lineTo(leftPoints[this.numSegments - 1].x, leftPoints[this.numSegments - 1].y);
+                    for (let i = this.numSegments - 1; i >= 1; i--) {
+                        const xc = (leftPoints[i].x + leftPoints[i - 1].x) / 2;
+                        const yc = (leftPoints[i].y + leftPoints[i - 1].y) / 2;
+                        ctx.quadraticCurveTo(leftPoints[i].x, leftPoints[i].y, xc, yc);
+                    }
+
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // 4. Línea dorsal sutil (lomo)
+                    ctx.beginPath();
+                    ctx.moveTo(this.segments[2].x, this.segments[2].y);
+                    for (let i = 3; i <= 8; i++) {
+                        ctx.lineTo(this.segments[i].x, this.segments[i].y);
+                    }
+                    ctx.strokeStyle = 'rgba(255, 255, 255, 0.16)';
+                    ctx.lineWidth = 2.2 * this.scale;
+                    ctx.lineCap = 'round';
+                    ctx.stroke();
+                }
+            }
+
+            // Inicializar peces
+            const fishes = [];
+            for (let i = 0; i < config.numFish; i++) {
+                const color = config.fishColors[i % config.fishColors.length];
+                fishes.push(new Fish(color));
+            }
+
+            // Bucle principal
+            function animate() {
+                ctx.fillStyle = config.backgroundColor;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                // Dibujar ondas en el agua
+                for (let i = ripples.length - 1; i >= 0; i--) {
+                    ripples[i].update();
+                    ripples[i].draw();
+                    if (ripples[i].alpha <= 0) {
+                        ripples.splice(i, 1);
+                    }
+                }
+
+                // Actualizar y dibujar comida
+                for (let i = foods.length - 1; i >= 0; i--) {
+                    const f = foods[i];
+
+                    if (f.radius < f.maxRadius) f.radius += 0.15;
+                    f.x += f.vx;
+                    f.y += f.vy;
+                    f.vx *= 0.985;
+                    f.vy *= 0.985;
+                    f.life -= 0.001;
+
+                    ctx.beginPath();
+                    ctx.arc(f.x, f.y, f.radius, 0, Math.PI * 2);
+                    ctx.fillStyle = `rgba(245, 200, 140, ${f.life})`;
+                    ctx.fill();
+
+                    if (f.life <= 0 || f.x < 0 || f.x > canvas.width || f.y < 0 || f.y > canvas.height) {
+                        foods.splice(i, 1);
+                    }
+                }
+
+                // Actualizar y dibujar peces
+                fishes.forEach(fish => {
+                    fish.update();
+                    fish.draw();
+                });
+
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        })();
     </script>
 </body>
 </html>
